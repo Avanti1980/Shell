@@ -2,14 +2,14 @@ SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 
 doc_start=0        # 是否开始正文
-align_start=0      # 是否开始段落
+align_start=0      # 是否开始行间公式
 itemize_start=0    # 是否开始无序列表
 enumerate_start=0  # 是否开始有序列表
 enumerate_number=0 # 有序列表计数器
 thm_start=0        # 是否开始定理
-thm_number=0       # 定理编号
 thm_print=0        # 是否输出定理二字
-proof_start=0      # 是否开始定理
+thm_number=0       # 定理编号
+proof_start=0      # 是否开始证明
 proof_print=0      # 是否输出证明二字
 defn_start=0       # 是否开始定义
 alg_start=0        # 是否开始算法
@@ -21,9 +21,17 @@ if [ -f "$file.md" ]; then
     rm $file.md # 如果有对应的md文件 删除之
 fi
 
+echo "process cross reference" >cr.txt
+
 while read -r line; do # 一行一行处理
 
     if [ $doc_start == 1 ]; then # 正文开始
+
+        if [ -z "$line" ]; then
+            echo $line >>$file.md
+            last_line=$line
+            continue
+        fi
 
         if [ -z "$last_line" ]; then                                 # 上一行为空
             if [[ $line =~ "\section" ]]; then                       # 当前行是标题
@@ -61,6 +69,10 @@ while read -r line; do # 一行一行处理
             continue
         fi
 
+        if [[ $last_line =~ "\end{itemize}" ]] && [ -n "$line" ]; then
+            echo "" >>$file.md
+        fi
+
         if [[ $line =~ "\begin{enumerate}" ]]; then # enumerate环境开始
             enumerate_start=1
             enumerate_number=0 # 计数清零
@@ -77,6 +89,9 @@ while read -r line; do # 一行一行处理
             thm_print=1
             ((thm_number++))
             last_line=$line
+            if [[ $line =~ "\label{" ]]; then
+                echo $line,$thm_number | sed 's/.*\\label{\(.*\)}/\1/' >>cr.txt
+            fi
             continue
         elif [[ $line =~ "\end{theorem}" ]] || [[ $line =~ "\end{lemma}" ]] || [[ $line =~ "\end{definition}" ]]; then # 定理环境结束
             thm_start=0
@@ -100,6 +115,9 @@ while read -r line; do # 一行一行处理
             enumerate_number=0
             ((alg_number++))
             last_line=$line
+            if [[ $line =~ "\label{" ]]; then
+                echo $line,$alg_number | sed 's/.*\\label{\(.*\)}/\1/' >>cr.txt
+            fi
             continue
         elif [[ $line =~ "\end{algorithm" ]]; then # algorithm环境结束
             alg_start=0
@@ -135,16 +153,15 @@ while read -r line; do # 一行一行处理
             line=$(echo $line | sed 's/          //')
             if [[ $line =~ "\item" ]]; then
                 ((enumerate_number++))
-                line=$(echo $line | sed "s/.*\\item\(.*\)/$enumerate_number.\1/g")
+                line=$(echo $line | sed "s/.*\\item\(.*\)/$enumerate_number.\1/")
             fi
         fi
 
         if [ $thm_start == 1 ]; then
+            line=$(echo $line | sed 's/    //')
             if [ $thm_print == 1 ]; then
-                line=$(echo $line | sed "s/^[[:space:]]*/**定理${thm_number}**. /g")
+                line=$(echo $line | sed "s/\(.*\)/**定理${thm_number}**：\1/")
                 thm_print=0
-            else
-                line=$(echo $line | sed 's/^[[:space:]]*//g')
             fi
         fi
 
@@ -163,6 +180,15 @@ while read -r line; do # 一行一行处理
             line="${line//\\\}/\\\\\}}"
             line="${line//_/\\_}"
             line="${line//\\textcolor/\\color}"
+            if [ $itemize_start == 1 ]; then
+                line=$(echo $line | sed 's/            /    /')
+                line=$(echo $line | sed 's/        /    /')
+            fi
+            line=$(echo $line | sed 's/\\blue{\([^}]*\)}/\\class{blue}{\1}/g')
+            line=$(echo $line | sed 's/\\red{\([^}]*\)}/\\class{red}{\1}/g')
+            line=$(echo $line | sed 's/\\green{\([^}]*\)}/\\class{green}{\1}/g')
+            line=$(echo $line | sed 's/\\yellow{\([^}]*\)}/\\class{yellow}{\1}/g')
+            line=$(echo $line | sed 's/\\violet{\([^}]*\)}/\\class{violet}{\1}/g')
         fi
 
         if [[ $line =~ "\textbf" ]]; then # 处理\textbf{}中的文本
@@ -185,8 +211,14 @@ while read -r line; do # 一行一行处理
             line=$(echo $line | sed 's/\\blue{\([^}]*\)}/<span class="blue"\>\1<\/span\>/g')
         fi
 
-        if [[ $line =~ "\href" ]]; then # 处理\blue{}中的文本
+        if [[ $line =~ "\href" ]]; then # 处理\href{}中的文本
             line=$(echo $line | sed 's/\\href{\([^}]*\)}{\([^}]*\)}/<u>[\2](\1)<\/u>/g')
+        fi
+
+        if [[ $line =~ "定理\ref{" ]]; then # 处理定理引用的问题
+            label=$(echo $line | sed 's/.*定理\\ref{\([^}]*\).*/\1/')
+            number=$(grep "$label" cr.txt | cut -d ',' -f 2)
+            line=$(echo $line | sed 's/\\ref{\([^}]*\)}/'$number'/')
         fi
 
         if [[ $line =~ "\end{document}" ]]; then # 正文结束
@@ -206,3 +238,5 @@ while read -r line; do # 一行一行处理
     last_line=$line
 
 done <$1
+
+rm cr.txt
