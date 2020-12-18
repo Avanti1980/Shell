@@ -8,10 +8,10 @@ usermod -aG bumblebee avanti
 
 # 常用工具
 pacman -S betterlockscreen                                              # 锁屏
-pacman -S curl wget youtube-dl transmission-qt                          # 下载
+pacman -S curl wget youtube-dl transmission-qt ffsend-bin               # 下载 上传
 pacman -S v2ray qv2ray-dev-git qv2ray-plugin-ssr-dev-git proxychains-ng # 科学上网
 pacman -S geogebra                                                      # 画图
-pacman -S deepin-screen-recorder                                        # 截图
+pacman -S flameshot                                                     # 截图
 pacman -S deepin-image-viewer                                           # 看图
 pacman -S deepin-picker                                                 # 取色
 pacman -S baidupcs-go-git baidunetdisk-bin                              # 度盘
