@@ -41,12 +41,12 @@ while read -r line || [[ -n "$line" ]]; do # 一行一行处理
     line=${line//,, /,,}
     line=${line//0000/0}
 
-    if [[ "$line" =~ "Dialogue:" ]]; then # 如果含有Dialogue:
+    if [[ "$line" =~ "Dialogue:" ]]; then   # 如果含有Dialogue:
         if [[ "$line" =~ "Default" ]]; then # 如果含有Default 相当于忽略所有Rubi样式的行
 
-            line=$(echo "$line" | sed 's/{\\pos\([0-9,()]*\)}//g')             # 去掉类似{\pos(184,678)}这种
-            line=$(echo "$line" | sed 's/{\\c&H\([0-9a-zA-Z]*\)&}//g')         # 去掉类似{\c&H00ffff&}这种
-            line=$(echo "$line" | sed 's/{\\pos\(.*\)&}//g')                   # 去掉类似{\pos(584,678)\c&H00ffff&}这种
+            line=$(echo "$line" | sed 's/{\\pos\([0-9,()]*\)}//g')     # 去掉类似{\pos(184,678)}这种
+            line=$(echo "$line" | sed 's/{\\c&H\([0-9a-zA-Z]*\)&}//g') # 去掉类似{\c&H00ffff&}这种
+            line=$(echo "$line" | sed 's/{\\pos\(.*\)&}//g')           # 去掉类似{\pos(584,678)\c&H00ffff&}这种
 
             line_no_content=$(echo $line | sed 's/\(.*\),.*/\1,/g')            # 提取除内容外的所有部分
             line_content=$(echo $line | sed 's/.*0,,\(.*\)/\1/g' | tr -d '\r') # 提取内容 并删掉最后的换行符

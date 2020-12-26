@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 pacman -S awesome # 我喜欢平铺的awesome
 
 pacman -S xorg xorg-drivers

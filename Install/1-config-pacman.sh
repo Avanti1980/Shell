@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 反注释掉 Color VerbosePkgLists TotalDownload
 sed -i 's/#Color/Color/g' /etc/pacman.conf
 sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf

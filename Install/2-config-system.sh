@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 # 安装内核和驱动
 pacman -S linux linux-headers linux-firmware
 

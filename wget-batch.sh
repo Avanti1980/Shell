@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 num="$1"
 while [ $num -le "$2" ]; do
     if [ $4 -eq 0 ]; then

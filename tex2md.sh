@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")
 

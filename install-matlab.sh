@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 sudo mkdir /home/temp/
 sudo mount ~/Softwares/MathWorks\ MATLAB\ R2018a\ Linux/R2018a_glnxa64_dvd1.iso /home/temp/
 sudo /home/temp/install

@@ -1,4 +1,7 @@
+#!/usr/bin/env bash
+
 # 文件名中的 第[1-9]集 -> 第0[1-9]集
+
 num=0
 SAVEIFS=$IFS
 IFS=$(echo -en "\n\b")

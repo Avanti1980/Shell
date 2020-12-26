@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 mkdir -p /usr/share/backgrounds
 
 cp $HOME/.config/awesome/themes/avanti/wallpaper.jpg /usr/share/backgrounds/wallpaper.jpg
