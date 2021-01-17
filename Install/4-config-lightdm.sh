@@ -2,7 +2,7 @@
 
 mkdir -p /usr/share/backgrounds
 
-cp $HOME/.config/awesome/themes/avanti/wallpaper.jpg /usr/share/backgrounds/wallpaper.jpg
+cp $HOME/.config/awesome/themes/$USER/wallpaper.jpg /usr/share/backgrounds/wallpaper.jpg
 
 sed -i 's/greeter-session=lightdm-gtk-greeter/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
 echo \[Greeter\] >/etc/lightdm/slick-greeter.conf

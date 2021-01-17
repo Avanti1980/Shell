@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-pacman -S awesome # 我喜欢平铺的awesome
+pacman -S awesome
 
 pacman -S xorg xorg-drivers
-pacman -S lightdm lightdm-slick-greeter # 用lightdm登录
+pacman -S lightdm lightdm-slick-greeter
 systemctl enable lightdm
 
 pacman -S yay pacman-contrib git
@@ -28,9 +28,7 @@ pacman -S zsh autojump thefuck oh-my-zsh-git zsh-completions zsh-autosuggestions
 pacman -S zsh-theme-powerlevel10k powerline-common powerline-fonts
 # chsh -s /bin/zsh
 
-# 创建文件目录 图标主题 自动挂载移动硬盘 处理访问权限 添加回收站
 pacman -S xdg-user-dirs arc-icon-theme mate-polkit udiskie gvfs
 
-# 读写ntfs磁盘 文件压缩查找 挂载远程服务器磁盘到本地 查找文件
 pacman -S ntfs-3g unrar p7zip file-roller mlocate sshfs
-# 用法 sudo sshfs 用户名@ip地址:远程目录 本地目录
+# sudo sshfs user@ip:directory localdirectory
