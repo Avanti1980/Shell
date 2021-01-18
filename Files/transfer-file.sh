@@ -1,3 +1,7 @@
+#!/usr/bin/env bash
+
+# usage: transfer-file.sh host ip password, e.g., transfer-file.sh avanti 192.168.1.101 xixi013579
+
 read -p "1. 文件(默认); 2. 文件夹; 请选择传输的目标: " select_index
 
 SAVEIFS=$IFS
@@ -26,9 +30,9 @@ if [ "$select_index" != "2" ]; then
             read -p "1. ~/Videos(默认); 2. ~/; 请选择传输的位置: " select_index
 
             if [ "$select_index" == "2" ]; then
-                sshpass -p 013579 scp "$line" avanti@$1:~/
+                sshpass -p $3 scp "$line" $1@$2:~/
             else
-                sshpass -p 013579 scp "$line" avanti@$1:~/Videos
+                sshpass -p $3 scp "$line" $1@$2:~/Videos
             fi
             break
         fi
@@ -49,7 +53,7 @@ else
     for line in $file_list; do
         ((num++))
         if [ "$select_index" == "$num" ]; then
-            sshpass -p 013579 scp -r "$line" avanti@$1:~/
+            sshpass -p $3 scp -r "$line" $1@$2:~/
             break
         fi
     done
