@@ -26,4 +26,7 @@ if [ -z "$(cat /etc/pacman.conf | grep arch4edu)" ]; then
 fi
 
 # update
+rm -fr /etc/pacman.d/gnupg
+pacman-key --init
+pacman-key --populate archlinux
 pacman -Sy archlinuxcn-keyring

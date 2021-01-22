@@ -3,8 +3,6 @@
 # yaourt -S npm nodejs-hexo --noconfirm
 sudo npm install -g hexo-cli
 
-yaourt -Syua
-
 # vscode
 # token 25072b3906f9b2d0d9c4f3f5d596e29be402ffe0
 # id ba7731b55ca5bf91bbe81b2eee7665b0

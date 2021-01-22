@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
+# usage: ./**.sh username
+
 mkdir -p /usr/share/backgrounds
 
-cp $HOME/.config/awesome/themes/$USER/wallpaper.jpg /usr/share/backgrounds/wallpaper.jpg
+cp /home/$1/.config/awesome/themes/$2/wallpaper.jpg /usr/share/backgrounds/wallpaper.jpg
 
 sed -i 's/greeter-session=lightdm-gtk-greeter/greeter-session=lightdm-slick-greeter/g' /etc/lightdm/lightdm.conf
 echo \[Greeter\] >/etc/lightdm/slick-greeter.conf

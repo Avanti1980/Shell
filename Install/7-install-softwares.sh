@@ -1,9 +1,13 @@
+#!/usr/bin/env bash
+
+# usage: ./**.sh username
+
 pacman -S intel-ucode intel-media-driver intel-compute-runtime
 pacman -S libva-vdpau-driver mesa-vdpau libvdpau-va-gl vdpauinfo
 pacman -S nvidia-dkms nvidia-utils opencl-nvidia
 pacman -S bumblebee primus
 systemctl enable bumblebeed.service
-usermod -aG bumblebee $USER
+usermod -aG bumblebee $1
 
 pacman -S betterlockscreen
 pacman -S curl wget youtube-dl transmission-qt ffsend-bin
