@@ -37,7 +37,7 @@ pacman -S shntool mac                                                           
 # shntool split -f example.cue -t %p\ %n\ %t -o flac example.ape
 
 pacman -S jupyterlab python-sympy python-pillow
-pacman -S python-scikit-learn python-numba python-cvxopt python-matplotlib
+pacman -S python-scikit-learn python-cvxopt python-matplotlib
 pacman -S python-tensorflow-opt-cuda python-pytorch-opt-cuda tensorboard
 
 pacman -S octave octave-forge julia

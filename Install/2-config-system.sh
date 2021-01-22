@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # usage: ./**.sh username
 
 # install kernel and drivers
