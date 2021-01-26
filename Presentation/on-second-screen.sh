@@ -12,7 +12,6 @@ connected_height=$(xrandr | grep " +  " | sed 's/[ ]*//' | cut -d ' ' -f 1 | cut
 for connected_output in $connected_outputs; do
     if [ "$connected_output" != "$primary_output" ]; then
         if [ $1 == "r" ]; then # 右扩展
-            # echo "xrandr --output $primary_output --auto --pos 0x0 --output $connected_output --auto --pos $primary_widthx0"
             xrandr --output $primary_output --auto --pos 0x0 --output $connected_output --auto --pos "$primary_width"x0
         fi
         if [ $1 == "b" ]; then # 下扩展

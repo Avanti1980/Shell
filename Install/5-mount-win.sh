@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # usage: ./**.sh username
 
 mkdir -p /home/$1/Windows/System /home/$1/Windows/Data

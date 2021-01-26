@@ -6,11 +6,8 @@ sed -i 's/#VerbosePkgLists/VerbosePkgLists/g' /etc/pacman.conf
 sed -i 's/#TotalDownload/TotalDownload/g' /etc/pacman.conf
 
 # uncomment [multilib]
-sed -i 's/#\[multilib\]/\[multilib\]/g' /etc/pacman.conf
-
-# uncomment the next line of [multilib]
-line_number=$(cat /etc/pacman.conf | grep -n "\[multilib\]" | sed -n '$p' | cut -d ':' -f 1)
-sed -i "$((++line_number)) s/#//g" /etc/pacman.conf
+no=$(cat /etc/pacman.conf | grep -n "\[multilib\]" | cut -d ':' -f 1)
+sed -i "${no},+1 s/#//g" /etc/pacman.conf
 
 # add archlinuxcn
 if [ -z "$(cat /etc/pacman.conf | grep archlinuxcn)" ]; then

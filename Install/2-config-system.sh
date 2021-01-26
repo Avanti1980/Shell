@@ -2,7 +2,7 @@
 # usage: ./**.sh username
 
 # install kernel and drivers
-pacman -S linux linux-headers linux-firmware
+pacman -S linux-zen linux-zen-headers linux-firmware
 
 # set time
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
